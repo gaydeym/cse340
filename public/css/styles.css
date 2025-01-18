@@ -1,6 +1,197 @@
-/******* Change Box Model ***************/
-*,
-*:before,
-*:after {
+/*************** Global Variables ***************/
+:root {
+  --main-color: #023047;
+  --accent-1-color: #fb8500;
+  --accent-2-color: #219ebc;
+  --background-color: #8ecae685;
+  --font-family: "Roboto", serif;
+}
+
+
+/*************** Global Box Model ***************/
+html {
   box-sizing: border-box;
+  font-family: var(--font-family);
+}
+
+*, *:before, *:after {
+  box-sizing: inherit;
+}
+
+
+/*************** Wrapper ***************/
+#wrapper {
+  width: 100%;
+  margin: 0 auto;
+  background-color: white;
+  padding: 0 .5rem;
+}
+
+
+/*************** Header ***************/
+#top-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 8rem;
+}
+
+.siteName a, #tools a {
+  text-decoration: none;
+  color: var(--font-color);
+}
+
+.siteName {
+  font-size: 2.5rem;
+  font-weight: 500;
+}
+
+#tools a {
+  text-transform: uppercase;
+}
+
+
+/*************** Navigation ***************/
+nav {
+  background-color: var(--main-color);
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+nav ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: space-evenly;
+  width: 100%;
+}
+
+nav ul li {
+  color: white;
+  cursor: pointer;
+  text-align: center;
+  flex: 1;
+}
+
+nav ul li:hover {
+  font-weight: bold;
+  color: var(--accent-1-color);
+}
+
+
+/*************** Body ***************/
+body {
+  margin: 0;
+}
+
+
+/*************** Land Page ***************/
+.main-car {
+  background: url("../images/vehicles/delorean.jpg") no-repeat center;
+  height: 20rem;
+  width: 100%;
+}
+
+.ad {
+  position: relative;
+  top: 2rem;
+  left: 2rem;
+  background-color: var(--background-color);
+  width: 15rem;
+  padding: 1rem;
+  text-align: center;
+}
+
+.ad h2 {
+  margin: 0;
+}
+
+.ad ul {
+  list-style: none;
+  padding: 0;
+  font-size: 1.2rem;
+}
+
+.btn {
+  padding: .8rem;
+  background-color: var(--main-color);
+  color: var(--accent-1-color);
+  font-size: 1.2rem;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+
+.btn:hover {
+  background-color: var(--accent-1-color);
+  color: var(--main-color);
+}
+
+
+/*************** Sections ***************/
+.sections, .upgrades {
+  display: grid;
+}
+
+.section-1 {
+  order: 1;
+}
+
+.section-2 {
+  order: -1;
+}
+
+.upgrades {
+  grid-template-columns: 1fr 1fr;
+  text-align: center;
+  gap: 1rem;
+}
+
+.upgrades div img {
+  background-color: var(--main-color);
+  padding: 2.5rem 30%;
+}
+
+.upgrades a {
+  text-decoration: none;
+  color: var(--main-color);
+}
+
+.reviews li {
+  margin-bottom: 2rem;
+}
+
+
+/*************** Media Queries ***************/
+@media (min-width: 48rem) {
+  #wrapper {
+    width: 80%;
+    padding: 0 1rem;
+    border: solid 5px var(--accent-2-color);
+  }
+
+  .siteName {
+    font-size: 4rem;
+  }
+
+  body {
+    background: url("../images/site/checkerboard.jpg");
+    background-size: 30rem;
+  }
+
+  .sections {
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .section-1 {
+    order: -1;
+  }
+  
+  .section-2 {
+    order: 1;
+  }
 }
