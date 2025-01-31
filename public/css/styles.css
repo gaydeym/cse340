@@ -224,6 +224,12 @@ body {
 }
 
 
+/*************** Error Page ***************/
+.error-image img {
+  width: 100%;
+}
+
+
 /*************** Media Queries ***************/
 @media (min-width: 48rem) {
   #wrapper {
