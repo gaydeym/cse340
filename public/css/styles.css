@@ -69,14 +69,15 @@ nav ul {
   width: 100%;
 }
 
-nav ul li {
+nav ul li a {
+  text-decoration: none;
   color: white;
   cursor: pointer;
   text-align: center;
   flex: 1;
 }
 
-nav ul li:hover {
+nav ul li a:hover {
   font-weight: bold;
   color: var(--accent-1-color);
 }
@@ -162,6 +163,64 @@ body {
 
 .reviews li {
   margin-bottom: 2rem;
+}
+
+
+/*************** Inventory ***************/
+/* General */
+#inv-display {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+}
+
+#inv-display li {
+  background: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 20rem;
+  text-align: center;
+}
+
+#inv-display li:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Image */
+#inv-display img {
+  width: 100%;
+}
+
+/* Name and price container */
+.namePrice {
+  padding: 1rem;
+}
+
+.namePrice hr {
+  border: none;
+  border-top: 2px solid #ddd;
+}
+
+.namePrice h2 {
+  font-size: 1.4rem;
+  margin: 10px 0;
+}
+
+.namePrice a {
+  text-decoration: none;
+  color: var(--main-color);
+}
+
+/* Price */
+.namePrice span {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: var(--main-color);
+  margin-top: 5px;
 }
 
 
