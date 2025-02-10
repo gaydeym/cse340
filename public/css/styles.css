@@ -88,6 +88,10 @@ body {
   margin: 0;
 }
 
+.bold {
+  font-weight: bold;
+}
+
 
 /*************** Land Page ***************/
 .main-car {
@@ -224,9 +228,43 @@ body {
 }
 
 
+/*************** Listing ***************/
+.car-listing {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 1rem;
+}
+
+.car-listing img {
+  width: 100%;
+}
+
+.description p {
+  margin: 0.5rem 0;
+  padding: 1rem;
+}
+
+
+.description p:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+.price {
+  font-size: 1.4rem;
+}
+
+
 /*************** Error Page ***************/
 .error-image img {
   width: 100%;
+}
+
+
+/*************** Error Page ***************/
+footer a {
+  display: block;
+  margin: 1rem 0;
 }
 
 
@@ -258,5 +296,11 @@ body {
   
   .section-2 {
     order: 1;
+  }
+
+  /* Listing */
+.car-listing {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }
