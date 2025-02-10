@@ -85,6 +85,7 @@ Util.buildItemListing = async function(data) {
               <span class="bold">Miles: </span>${data.inv_miles.toLocaleString('en-US', { style: 'decimal'})}
             </p>
           </div>
+        </div>
       </section>
     `;
   } else {
