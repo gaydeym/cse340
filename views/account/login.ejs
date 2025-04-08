@@ -9,18 +9,10 @@
                 <% }) %>
         </ul>
         <% } %>
+            <p>All fields are required.</p>
             <form class="login-form" action="/account/login" method="post">
-                <label>
-                    Email
-                    <input type="email" name="account_email" required autocomplete="email username"
-                        value="<%= locals.account_email %>">
-                </label>
-                <label>
-                    Password
-                    <input type="password" name="account_password" id="password" required
-                        autocomplete="current-password">
-                    <button class="reveal-button" id="passwordHide" type="button">Show password</button>
-                </label>
+                <label>Email<input type="email" name="account_email" required value="<%= locals.account_email %>"></label>
+                <label>Password<input type="password" name="account_password" id="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"><button class="reveal-button" id="passwordHide" type="button">Show password</button></label>
                 <input type="submit" value="LOGIN">
             </form>
             <div>
