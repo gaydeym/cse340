@@ -1,0 +1,41 @@
+<h1><%- title %></h1>
+<%- messages() %>
+    <% if (errors) { %>
+        <ul class="notice">
+            <% errors.array().forEach(error=> { %>
+                <li>
+                    <%= error.msg %>
+                </li>
+                <% }) %>
+        </ul>
+        <% } %>
+            <form class="login-form" action="/account/register" method="post">
+                <label>First name<input type="text" name="account_firstname" required autocomplete="given-name"
+                        value="<%= locals.account_firstname %>"></label>
+                <label>Last name<input type="text" name="account_lastname" required autocomplete="family-name"
+                        value="<%= locals.account_last %>"></label>
+                <label>Email address<input type="email" name="account_email" required autocomplete="email username"
+                        value="<%= locals.account_email %>"></label>
+                <label>Password<input type="password" name="account_password" id="password" required
+                        autocomplete="new-password" pattern="^(?=.*[A-Z])(?=.*\d)(?=.*[^\w\s]).{12,}$"><button
+                        class="reveal-button" id="passwordHide" type="button">Show password</button></label>
+                <p class="fine-print">Password must be 12 characters or longer, contain 1 capital letter, 1 number
+                    and 1 special character</p>
+                <input type="submit" value="REGISTER">
+            </form>
+            <div>
+                <span>Do you have an account? <a href="/account/login">Log-in</a></span>
+            </div>
+            <script>
+                const passwordInput = document.querySelector("#password");
+                const passwordHide = document.querySelector("#passwordHide");
+                passwordHide.addEventListener("click", () => {
+                    if (passwordInput.getAttribute("type") === "password") {
+                        passwordInput.setAttribute("type", "text");
+                        passwordHide.innerText = "Hide password";
+                    } else {
+                        passwordInput.setAttribute("type", "password");
+                        passwordHide.innerText = "Show password";
+                    }
+                });
+            </script>
