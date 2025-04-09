@@ -332,6 +332,86 @@ body {
 .fine-print {
   color: white;
   margin-bottom: 1em;
+  margin-top: 0;
+}
+
+
+/*************** Management Page ***************/
+.success li {
+  color: #2ecc71;
+  list-style: none;
+  font-weight: bold;
+}
+
+.management-container a {
+  display: block;
+  text-decoration: none;
+  color: var(--main-color);
+  font-size: large;
+}
+
+
+/*************** Classification and inventory Page ***************/
+.inv-form {
+  max-width: 700px;
+  margin: 2em auto;
+  padding: 1.5em;
+  background: var(--main-color);
+}
+
+.inv-form select {
+  width: 100%;
+  padding: 0.75em;
+  margin-bottom: 1em;
+  border: 2px solid var(--main-color);
+}
+
+.inv-form label {
+  display: block;
+  margin-bottom: 0.5em;
+  font-weight: bold;
+  color: white;
+}
+
+.inv-form input {
+  width: 100%;
+  padding: 0.75em;
+  margin-bottom: 1em;
+  border: 2px solid var(--main-color);
+}
+
+.inv-form input:focus:invalid,
+.inv-form textarea:focus:invalid {
+  background-color: #ffe5e5;
+  border: 2px solid #e74c3c;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.inv-form input:required:valid,
+.inv-form textarea:required:valid {
+  background-color: #e8f5e9;
+  border: 2px solid #2ecc71;
+  outline: none;
+  transition: all 0.3s ease-in-out;
+}
+
+.inv-form textarea {
+  width: 100%;
+  height: 10em;
+}
+
+.inv-form input[type="submit"] {
+  background-color: var(--accent-1-color);
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.inv-form input[type="submit"]:hover {
+  background-color: var(--accent-2-color);
 }
 
 

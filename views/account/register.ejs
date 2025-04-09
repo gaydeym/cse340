@@ -9,8 +9,8 @@
                 <% }) %>
         </ul>
         <% } %>
-            <p>All fields are required.</p>
             <form class="login-form" action="/account/register" method="post">
+                <p class="fine-print">All fields are required.</p>
                 <label>First name<input type="text" name="account_firstname" required value="<%= locals.account_firstname %>"></label>
                 <label>Last name<input type="text" name="account_lastname" required value="<%= locals.account_lastname %>"></label>
                 <label>Email address<input type="email" name="account_email" required value="<%= locals.account_email %>"></label>

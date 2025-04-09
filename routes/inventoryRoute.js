@@ -2,13 +2,29 @@
 const express = require("express")
 const router = new express.Router() 
 const invController = require("../controllers/invController")
-const utilities = require("../utilities");
+const utilities = require("../utilities")
+const regValidate = require('../utilities/inventory-validation')
 
 // Route to build inventory by classification view
 router.get("/type/:classificationId", utilities.handleErrors(invController.buildByClassificationId));
 
 // Route to build inventory by inventory view
 router.get("/detail/:inventoryId", utilities.handleErrors(invController.buildByInventoryId));
+
+// Route to build inventory management view
+router.get('/', utilities.handleErrors(invController.buildByInvManagement))
+ 
+// Route to build add classification view
+router.get('/add-classification', utilities.handleErrors(invController.buildByAddClassification))
+
+// Route to handle add classification
+router.post('/add-classification', regValidate.classificationRules(), regValidate.checkClassificationData, utilities.handleErrors(invController.addClassification))
+
+// Route to build add inventory view
+router.get('/add-inventory', utilities.handleErrors(invController.buildByAddInventory))
+
+// Route to handle add inventory
+router.post('/add-inventory', regValidate.inventoryRules(), regValidate.checkInventoryData, utilities.handleErrors(invController.addInventory))
 
 // Add the new error route
 router.get("/trigger-error", utilities.handleErrors(invController.triggerError));

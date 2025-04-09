@@ -1,0 +1,30 @@
+<% if (title) { %>
+    <h1>
+        <%= title %>
+    </h1>
+    <% } else { res.redirect('/') } %>
+
+        <%- messages() %>
+            <% if (errors) { %>
+                <ul class="notice">
+                    <% errors.array().forEach(error=> { %>
+                        <li>
+                            <%= error.msg %>
+                        </li>
+                        <% }) %>
+                </ul>
+                <% } %>
+
+                    <form class="inv-form" action="/inv/add-inventory" method="post">
+                        <label for="classification_id">Classification<%- dropdown %></label>
+                        <label for="inv_year">Year<input type="text" id="inv_year" name="inv_year" pattern="^[0-9]{4}$" maxlength="4" placeholder="Enter 4-digit year" title="Please enter a valid 4-digit year" value="<%= locals.inv_year %>" required /></label>                        
+                        <label for="inv_make">Make<input type="text" id="inv_make" name="inv_make" minlength="3" placeholder="Min of 3 characters" title="Please enter a Make" value="<%= locals.inv_make %>" required /></label>                        
+                        <label for="inv_model">Model<input type="text" id="inv_model" name="inv_model" minlength="3" placeholder="Min of 3 characters" title="Please enter a model" value="<%= locals.inv_model %>" required /></label>                        
+                        <label for="inv_color">Color<input type="text" id="inv_color" name="inv_color" title="Please enter a color" value="<%= locals.inv_color %>" required /></label>                      
+                        <label for="inv_miles">Milage<input type="text" id="inv_miles" name="inv_miles" pattern="[0-9]*" placeholder="Enter mileage numbers only" title="Please enter a valid mileage - numbers only." value="<%= locals.inv_miles %>" required /></label>
+                        <label for="inv_price">Price<input type="text" id="inv_price" name="inv_price" pattern="[0-9]*" placeholder="Enter price numbers only" title="Please enter a valid price numbers only." value="<%= locals.inv_price %>" required /></label>
+                        <label for="inv_description">Description<textarea id="inv_description" name="inv_description" placeholder="Add description here..." title="Please enter a description." value="<%= locals.inv_description %>" required></textarea></label>
+                        <label for="inv_image">Add Image<input type="text" id="inv_image" name="inv_image" value="/images/vehicles/no-image.png" /></label>
+                        <label for="inv_thumbnail">Add Thumbnail Image<input type="text" id="inv_thumbnail" name="inv_thumbnail" value="/images/vehicles/no-image-tn.png" /></label>
+                        <input type="submit" value="Add Inventory"></input>
+                    </form>
