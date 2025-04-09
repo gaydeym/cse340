@@ -26,7 +26,7 @@
                         <label for="inv_color">Color<input type="text" id="inv_color" name="inv_color" title="Please enter a color" value="<%= locals.inv_color %>" required></label>                      
                         <label for="inv_miles">Milage<input type="text" id="inv_miles" name="inv_miles" pattern="[0-9]*" placeholder="Enter mileage numbers only" title="Please enter a valid mileage - numbers only." value="<%= locals.inv_miles %>" required></label>
                         <label for="inv_price">Price<input type="text" id="inv_price" name="inv_price" pattern="[0-9]*" placeholder="Enter price numbers only" title="Please enter a valid price numbers only." value="<%= locals.inv_price %>" required></label>
-                        <label for="inv_description">Description<textarea id="inv_description" name="inv_description" placeholder="Add description here..." title="Please enter a description." required></textarea></label>
+                        <label for="inv_description">Description<textarea id="inv_description" name="inv_description" placeholder="Add description here..." title="Please enter a description." required><%= locals.inv_description %></textarea></label>
                         <label for="inv_image">Add Image<input type="text" id="inv_image" name="inv_image" value="/images/vehicles/no-image.png"></label>
                         <label for="inv_thumbnail">Add Thumbnail Image<input type="text" id="inv_thumbnail" name="inv_thumbnail" value="/images/vehicles/no-image-tn.png"></label>
                         <input type="submit" value="Add Inventory">

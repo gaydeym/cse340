@@ -99,19 +99,19 @@ Util.buildItemListing = async function(data) {
 /* ************************
  * Constructs the Classification HTML select dropdown
  ************************** */
-Util.buildClassificationDropdown = async function (classification_id) {
-    let data = await invModel.getClassifications();
+Util.buildClassificationDropdown = async function (classification_id = "") {
+  let data = await invModel.getClassifications();
+  
+  let option = `<select id="classification_id" name="classification_id" required>
+                <option value="" disabled ${!classification_id ? "selected" : ""}>Select a classification</option>`;
 
-    let option = `<select id="classification_id" name="classification_id" value="<%= locals.classification_id %>" required><option value="" disabled selected>Select a classification</option>`;
+  data.rows.forEach((row) => {
+      const isSelected = classification_id.toString() === row.classification_id.toString() ? "selected" : "";
+      option += `<option value="${row.classification_id}" ${isSelected}>${row.classification_name}</option>`;
+  });
 
-    data.rows.forEach((row) => {
-        const isSelected = classification_id === row.classification_id ? "selected" : "";
-        option += `<option value="${row.classification_id}" ${isSelected}>${row.classification_name}</option>`;
-    });
-
-    option += `</select>`;
-
-    return option;
+  option += `</select>`;
+  return option;
 };
 
 /* ****************************************

@@ -181,7 +181,7 @@ validate.checkInventoryData = async (req, res, next) => {
     let errors = validationResult(req);
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav();
-        let dropdown = await utilities.buildClassificationDropdown();
+        let dropdown = await utilities.buildClassificationDropdown(classification_id);
         res.render("inventory/add-inventory", {
             errors,
             title: "Add Inventory",
@@ -201,6 +201,6 @@ validate.checkInventoryData = async (req, res, next) => {
         return;
     }
     next();
-};  
+};
  
 module.exports = validate

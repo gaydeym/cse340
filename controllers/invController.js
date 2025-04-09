@@ -131,8 +131,10 @@ invCont.addInventory = async function (req, res, next) {
         classification_id
     );
 
+    // console.log('classification_id:', classification_id); // Debubbing
+
     let nav = await utilities.getNav()
-    let dropdown = await utilities.buildClassificationDropdown()
+    let dropdown = await utilities.buildClassificationDropdown(classification_id)
 
     if (regResult) {
         req.flash(
