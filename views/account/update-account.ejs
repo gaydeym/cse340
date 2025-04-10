@@ -25,7 +25,8 @@
             <fieldset>
                 <legend>Update User Password</legend>
                     <p class="fine-print">Caution! This will update your password. Please enter a secure password.</p>
-                    <label for="account_password">Password<input type="password" id="account_password" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" title="Password must be at least 12 characters long and include at least one capital letter, one number, and one special character." placeholder="Enter your secure password"><button class="reveal-button" id="passwordHide" type="button">Show password</button></label>
+                    <label for="account_password">Password<input type="password" id="account_password" name="account_password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$" title="Password must be at least 12 characters long and include at least one capital letter, one number, and one special character." placeholder="Enter your secure password"></label>
+                    <button class="reveal-button" id="passwordHide" type="button">Show password</button>
                     <p class="fine-print">Password must be 12 characters or longer, contain 1 capital letter, 1 number and 1 special character</p>
                     <input type="submit" value="Update Account Password">
                     <input type="hidden" name="account_id" <% if (locals.account_id) { %> value="<%= locals.account_id %>" <% } %>>

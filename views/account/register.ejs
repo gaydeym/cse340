@@ -21,7 +21,8 @@
                         <label>First name<input type="text" name="account_firstname" required value="<%= locals.account_firstname %>"></label>
                         <label>Last name<input type="text" name="account_lastname" required value="<%= locals.account_lastname %>"></label>
                         <label>Email address<input type="email" name="account_email" required value="<%= locals.account_email %>"></label>
-                        <label>Password<input type="password" name="account_password" id="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"><button class="reveal-button" id="passwordHide" type="button">Show password</button></label>
+                        <label>Password<input type="password" name="account_password" id="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"></label>
+                        <button class="reveal-button" id="passwordHide" type="button">Show password</button>
                         <p class="fine-print">Password must be 12 characters or longer, contain 1 capital letter, 1 number and 1 special character</p>
                         <input type="submit" value="REGISTER">
                     </form>

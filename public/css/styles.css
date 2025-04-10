@@ -316,7 +316,7 @@ body {
   border: none;
   color: white;
   cursor: pointer;
-  padding: 0;
+  padding: 0.5em 0;
 }
 
 .login-form + div {

@@ -18,7 +18,8 @@
                     <form id="loginForm" class="login-form" action="/account/login" method="post">
                         <p class="fine-print">All fields are required.</p>
                         <label>Email<input type="email" name="account_email" required value="<%= locals.account_email %>"></label>
-                        <label>Password<input type="password" name="account_password" id="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"><button class="reveal-button" id="passwordHide" type="button">Show password</button></label>
+                        <label>Password<input type="password" name="account_password" id="password" required pattern="^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[^a-zA-Z0-9])(?!.*\s).{12,}$"></label>
+                        <button class="reveal-button" id="passwordHide" type="button">Show password</button>
                         <input type="submit" value="LOGIN">
                     </form>
                     <div>
