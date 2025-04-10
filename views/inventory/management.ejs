@@ -23,8 +23,10 @@
                     <section class="management-container">
                         <h3>Manage Inventory</h3>
                         <p>Select a classification from the list to see the items belonging to the classification.</p>
-                        <label for="classification_id">Classification List</label>
-                        <%- classificationSelect %>
+                        <div class="dropdown">
+                            <label for="classification_id">Classification List</label>
+                            <%- classificationSelect %>
+                        </div>
                         <table id="inventoryDisplay"></table>
                         <noscript>JavaScript must be enabled to use this page.</noscript>
                     </section>
