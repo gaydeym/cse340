@@ -15,5 +15,14 @@
                         <% }) %>
                 </ul>
                 <% } %>
-
-                    <h2>You're logged in!</h1>
+                    <div class="management-container">
+                        <h2>Welcome <%= locals.accountData.account_firstname %></h2>
+                        <h3>You are Logged in!</h3>
+                        <a href="/account/update/<%= locals.accountData.account_id %>">Update Account Information</a>
+                        <% if (locals.accountData.account_type==="Employee" || locals.accountData.account_type==="Admin" ) {
+                            %>
+                            <hr/>
+                            <h4>Inventory Management</h4>
+                            <a href="/inv">Access Inventory Management</a>
+                            <% } %>
+                    </div>

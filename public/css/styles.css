@@ -336,6 +336,16 @@ body {
 }
 
 
+/*************** Login Page ***************/
+.login-form legend {
+  color: white;
+}
+
+.login-form fieldset {
+  padding: 1.5em;
+}
+
+
 /*************** Management Page ***************/
 .success li {
   color: #2ecc71;
@@ -343,11 +353,20 @@ body {
   font-weight: bold;
 }
 
+.management-container hr {
+  margin: 2rem 0;
+  color: #ddd;
+}
+
 .management-container a {
   display: block;
   text-decoration: none;
   color: var(--main-color);
   font-size: large;
+}
+
+.management-container a:hover {
+  color: var(--accent-2-color);
 }
 
 .management-container #classification_id {
@@ -420,7 +439,8 @@ noscript {
 
 
 /*************** Update Page ***************/
-#updateForm input:disabled {
+#updateForm input:disabled,
+#updateRegistrationForm input:disabled{
   background-color: #666;
   cursor: not-allowed;
 }

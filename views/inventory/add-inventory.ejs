@@ -15,10 +15,10 @@
                 </ul>
                 <% } %>
 
-                    <form class="inv-form" action="/inv/add-inventory" method="post">
+                    <form id="addInventoryForm" class="inv-form" action="/inv/add-inventory" method="post">
                         <div class="dropdown">
                             <label for="classification_id">Classification</label>
-                            <%- dropdown %>
+                            <%- classificationSelect %>
                         </div>
                         <label for="inv_year">Year<input type="text" id="inv_year" name="inv_year" pattern="^[0-9]{4}$" maxlength="4" placeholder="Enter 4-digit year" title="Please enter a valid 4-digit year" value="<%= locals.inv_year %>" required></label>                        
                         <label for="inv_make">Make<input type="text" id="inv_make" name="inv_make" minlength="3" placeholder="Min of 3 characters" title="Please enter a Make" value="<%= locals.inv_make %>" required></label>                        

@@ -1,6 +1,7 @@
 const utilities = require('./')
 const { body, validationResult } = require('express-validator')
 const inventoryModel = require('../models/inventory-model')
+
 const validate = {}
  
 /*  **********************************
@@ -164,6 +165,25 @@ validate.inventoryRules = () => {
 /* ******************************
  * Check data and return errors or continue to next
  * ***************************** */
+// validate.checkInventoryData = async (req, res, next) => {
+//     const { classification_id } = req.body;
+//     let errors = [];
+//     errors = validationResult(req);
+//     if (!errors.isEmpty()) {
+//         let nav = await utilities.getNav();
+//         let classificationSelect = await utilities.buildClassificationDropdown();
+//         res.render("inventory/add-inventory", {
+//             errors,
+//             title: "Add Inventory Management",
+//             nav,
+//             classificationSelect,
+//             classification_id,
+//         });
+//         return;
+//     }
+//     next();
+// };
+
 validate.checkInventoryData = async (req, res, next) => {
     const {
         classification_id,
@@ -179,14 +199,17 @@ validate.checkInventoryData = async (req, res, next) => {
     } = req.body;
 
     let errors = validationResult(req);
+
     if (!errors.isEmpty()) {
         let nav = await utilities.getNav();
-        let dropdown = await utilities.buildClassificationDropdown(classification_id);
+        let classificationSelect = await utilities.buildClassificationDropdown(
+            classification_id
+        );
         res.render("inventory/add-inventory", {
             errors,
             title: "Add Inventory",
             nav,
-            dropdown,
+            classificationSelect,
             classification_id,
             inv_year,
             inv_make,
@@ -201,7 +224,7 @@ validate.checkInventoryData = async (req, res, next) => {
         return;
     }
     next();
-};
+};  
 
 /* ******************************
  * Check data and return errors or continue to next

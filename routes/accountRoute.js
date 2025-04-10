@@ -6,10 +6,13 @@ const utilities = require("../utilities")
 const regValidate = require('../utilities/account-validation')
 
 // Deliver login view
-router.get("/login", utilities.handleErrors(accountController.buildLogin))
+router.get("/login", utilities.handleErrors(accountController.buildLogin));
 
 // Deliver register view
-router.get("/register", utilities.handleErrors(accountController.buildRegister))
+router.get(
+    "/register",
+    utilities.handleErrors(accountController.buildRegister)
+);
 
 // Process the login attempt
 router.post(
@@ -22,12 +25,44 @@ router.post(
 // Process the registration data
 router.post(
     "/register",
-    regValidate.registationRules(),
+    regValidate.registrationRules(),
     regValidate.checkRegData,
     utilities.handleErrors(accountController.registerAccount)
 );
 
 // Route to build account management view
-router.get('/', utilities.checkLogin, utilities.handleErrors(accountController.buildManagement))
+router.get(
+    "/",
+    utilities.checkLogin,
+    utilities.handleErrors(accountController.buildManagement)
+);
+
+// Route to build update account view
+router.get(
+    "/update/:account_id",
+    utilities.checkLogin,
+    utilities.handleErrors(accountController.buildUpdateAccountView)
+);
+
+// Update account information
+router.post(
+    "/update-user-info/",
+    utilities.checkLogin,
+    regValidate.updateRegistrationRules(),
+    regValidate.checkUpdateRegData,
+    utilities.handleErrors(accountController.updateAccountInfo)
+);
+
+// Change password
+router.post(
+    "/update-user-password/",
+    utilities.checkLogin,
+    regValidate.updatePasswordRules(),
+    regValidate.checkPasswordData,
+    utilities.handleErrors(accountController.updatePassword)
+);
+
+// Route to build Logout view
+router.get("/logout", utilities.handleErrors(accountController.logout));
 
 module.exports = router;

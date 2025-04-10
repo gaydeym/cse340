@@ -1,13 +1,9 @@
-<!-- **** Delete-Confirm **** -->
-
-<!-- Content Heading -->
 <% if (title) { %>
     <h1>
         <%= title %>
     </h1>
     <% } else { res.redirect('/') } %>
 
-        <!-- Message Block -->
         <%- messages() %>
             <% if (errors) { %>
                 <ul class="notice">

@@ -3,26 +3,28 @@ const pool = require("../database/")
 /* ***************************
  *  Get all classification data
  * ************************** */
-async function getClassifications(){
-  return await pool.query("SELECT * FROM public.classification ORDER BY classification_name")
+async function getClassifications() {
+    return await pool.query(
+        "SELECT * FROM public.classification ORDER BY classification_name"
+    );
 }
 
 /* ***************************
  *  Get all inventory items and classification_name by classification_id
  * ************************** */
 async function getInventoryByClassificationId(classification_id) {
-  try {
-    const data = await pool.query(
-      `SELECT * FROM public.inventory AS i 
+    try {
+        const data = await pool.query(
+            `SELECT * FROM public.inventory AS i 
       JOIN public.classification AS c 
       ON i.classification_id = c.classification_id 
       WHERE i.classification_id = $1`,
-      [classification_id]
-    )
-    return data.rows
-  } catch (error) {
-    console.error("getclassificationsbyid error " + error)
-  }
+            [classification_id]
+        );
+        return data.rows;
+    } catch (error) {
+        console.error("getclassificationsbyid error " + error);
+    }
 }
 
 /* ***************************
@@ -62,20 +64,21 @@ async function getInventoryById(inv_id) {
 }
 
 /* ***************************
-  *  Add a new Classification to the database
+  *  Add a new classification to the database
   * ************************** */
 async function addClassification(classification_name) {
-  try {
-      const sql = 'INSERT INTO classification (classification_name) VALUES ($1) RETURNING *'
-      return await pool.query(sql, [classification_name])
-  } catch (error) {
-      console.error('Database Error:', error.message);
-      return error.message
-  }
+    try {
+        const sql =
+            "INSERT INTO classification (classification_name) VALUES ($1) RETURNING *";
+        return await pool.query(sql, [classification_name]);
+    } catch (error) {
+        console.error("Database Error:", error.message);
+        return error.message;
+    }
 }
 
 /* **********************
- *   Check for existing Classification
+ *   Check for existing classification
  * ********************* */
 async function checkExistingClassification(classification_name) {
     try {
@@ -90,7 +93,7 @@ async function checkExistingClassification(classification_name) {
 }
 
 /* ***************************
- *  Add a new Inventory to the database
+ *  Add a new inventory to the database
  * ************************** */
 async function addInventory(
     inv_make,
@@ -126,7 +129,7 @@ async function addInventory(
 }
 
 /* ***************************
- *  Edit/Update Inventory to the database
+ *  Edit/update inventory to the database
  * ************************** */
 async function updateInventory(
     inv_id,
@@ -164,7 +167,7 @@ async function updateInventory(
 }
 
 /* ***************************
- *  Delete Inventory to the database
+ *  Delete inventory to the database
  * ************************** */
 async function deleteInventory(inv_id) {
     try {

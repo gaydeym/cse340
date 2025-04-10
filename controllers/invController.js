@@ -16,6 +16,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
     title: className + " vehicles",
     nav,
     grid,
+    errors: null,
   })
 }
 
@@ -44,8 +45,8 @@ invCont.buildByInvManagement = async function (req, res, next) {
     res.render("./inventory/management", {
         title: "Inventory Management",
         nav,
-        errors: null,
         classificationSelect,
+        errors: null,
     });
 };
 
@@ -74,9 +75,11 @@ invCont.addClassification = async function (req, res, next) {
             "success",
             `Success, ${classification_name} has been added to the database.`
         );
+        const classificationSelect = await utilities.buildClassificationDropdown();
         res.status(201).render("./inventory/management", {
             title: "Inventory Management",
             nav,
+            classificationSelect,
             errors: null,
         });
     } else {
@@ -93,12 +96,12 @@ invCont.addClassification = async function (req, res, next) {
  *  Build Add Inventory View
  * ************************** */
 invCont.buildByAddInventory = async function (req, res, next) {
-    const dropdown = await utilities.buildClassificationDropdown();
+    const classificationSelect = await utilities.buildClassificationDropdown();
     let nav = await utilities.getNav();
     res.render("./inventory/add-inventory", {
         title: "Add Inventory",
         nav,
-        dropdown,
+        classificationSelect,
         errors: null,
     });
 };
@@ -133,11 +136,12 @@ invCont.addInventory = async function (req, res, next) {
         classification_id
     );
 
+    // console.log('classification_id:', classification_id); // Debubbing
+
     let nav = await utilities.getNav();
+    let classificationSelect = await utilities.buildClassificationDropdown(classification_id)
 
     if (regResult) {
-        const classificationSelect = await utilities.buildClassificationDropdown();
-
         req.flash(
             "success",
             `Success, ${inv_year} ${inv_make} ${inv_model} has been added to the database.`
@@ -146,18 +150,15 @@ invCont.addInventory = async function (req, res, next) {
         res.status(201).render("./inventory/management", {
             title: "Inventory Management",
             nav,
-            errors: null,
             classificationSelect,
+            errors: null,
         });
     } else {
-        let dropdown = await utilities.buildClassificationDropdown(
-            classification_id
-        );
         req.flash("notice", "Sorry, adding inventory failed.");
         res.status(501).render("./inventory/add-inventory", {
             title: "Add Inventory",
             nav,
-            dropdown,
+            classificationSelect,
             errors: null,
         });
     }
@@ -308,7 +309,7 @@ invCont.deleteInventory = async function (req, res, next) {
     );
 
     if (updateResult) {
-        req.flash("success", `The Vehicle was successfully deleted.`);
+        req.flash("success", `The vehicle was successfully deleted.`);
         res.redirect("/inv/");
     } else {
         const itemName = `${inv_make} ${inv_model}`;

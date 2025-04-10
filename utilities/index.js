@@ -1,7 +1,8 @@
 const invModel = require("../models/inventory-model");
-const Util = {};
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
+
+const Util = {};
 
 /* ************************
  * Constructs the nav HTML unordered list
@@ -135,22 +136,15 @@ Util.buildItemListing = async function (data) {
 Util.buildClassificationDropdown = async function (classification_id = "") {
     let data = await invModel.getClassifications();
 
-    let option = `<select id="classification_id" name="classification_id" required>
-                <option value="" disabled ${
-                    !classification_id ? "selected" : ""
-                }>Select a classification</option>`;
-
+    let option = `<select id="classification_id" name="classification_id" required><option value="" disabled ${!classification_id ? "selected" : ""}>Select a classification</option>`;
     data.rows.forEach((row) => {
-        const isSelected =
-            classification_id.toString() === row.classification_id.toString()
-                ? "selected"
-                : "";
+        const isSelected = classification_id.toString() === row.classification_id.toString()? "selected": "";
         option += `<option value="${row.classification_id}" ${isSelected}>${row.classification_name}</option>`;
     });
 
     option += `</select>`;
     return option;
-};
+};          
 
 /* ****************************************
  * Middleware For Handling Errors
@@ -194,6 +188,66 @@ Util.checkLogin = (req, res, next) => {
       req.flash("notice", "Please log in.");
       return res.redirect("/account/login");
   }
+};
+
+/* ****************************************
+ * Middleware to check account type for access
+ **************************************** */
+Util.checkAccountType = (req, res, next) => {
+    const redirectToLogin = (message) => {
+        req.flash("notice", message);
+        return res.redirect("/account/login");
+    };
+
+    const verifyToken = (token) => {
+        return new Promise((resolve, reject) => {
+            jwt.verify(
+                token,
+                process.env.ACCESS_TOKEN_SECRET,
+                (err, accountData) => {
+                    if (err) return reject(err);
+                    resolve(accountData);
+                }
+            );
+        });
+    };
+
+    if (!req.cookies.jwt) {
+        return redirectToLogin(
+            "You are not logged in. Please log in to access this page."
+        );
+    }
+
+    verifyToken(req.cookies.jwt)
+        .then((accountData) => {
+            const { account_type, account_firstname } = accountData;
+
+            if (account_type === "Admin" || account_type === "Employee") {
+                req.flash(
+                    "success",
+                    `Welcome back, ${account_firstname}! You are successfully logged in as an ${account_type}.`
+                );
+                res.locals.accountData = accountData;
+                res.locals.loggedin = true;
+                return next();
+            }
+
+            if (account_type === "Client") {
+                return redirectToLogin(
+                    `Sorry, ${account_firstname}. You must be logged in as an Employee or Admin to access this page.`
+                );
+            }
+
+            return redirectToLogin(
+                "Your account type is not authorized to access this page. Please contact support."
+            );
+        })
+        .catch((err) => {
+            console.error("JWT verification error:", err);
+            return redirectToLogin(
+                "Your session has expired or is invalid. Please log in again."
+            );
+        });
 };
 
 module.exports = Util;
