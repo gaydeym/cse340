@@ -29,4 +29,18 @@ router.post('/add-inventory', regValidate.inventoryRules(), regValidate.checkInv
 // Add the new error route
 router.get("/trigger-error", utilities.handleErrors(invController.triggerError));
 
+// Route to build get inventory view
+router.get('/getInventory/:classification_id', utilities.handleErrors(invController.getInventoryJSON))
+
+// Route to build edit inventory view
+router.get('/edit/:inventoryId', utilities.handleErrors(invController.buildByEditInventory))
+
+// Route to handle update inventory
+router.post(
+    "/update/",
+    regValidate.inventoryRules(),
+    regValidate.checkInventoryData,
+    utilities.handleErrors(invController.updateInventory)
+);
+
 module.exports = router;
