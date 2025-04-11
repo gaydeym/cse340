@@ -1,4 +1,5 @@
 const invModel = require("../models/inventory-model")
+const reviewModel = require("../models/review-model")
 const utilities = require("../utilities/")
 
 const invCont = {}
@@ -24,15 +25,24 @@ invCont.buildByClassificationId = async function (req, res, next) {
  *  Build Inventory by Inventory ID
  * ************************** */
 invCont.buildByInventoryId = async function (req, res, next) {
-    const inventory_id = req.params.inventoryId;
-    const data = await invModel.getInventoryByInventoryId(inventory_id);
+    const inv_id = parseInt(req.params.inventoryId);
+    const data = await invModel.getInventoryByInventoryId(inv_id);
     const listing = await utilities.buildItemListing(data[0]);
     let nav = await utilities.getNav();
     const itemName = `${data[0].inv_year} ${data[0].inv_make} ${data[0].inv_model}`;
+    const account_id = res.locals.accountData?.account_id
+        ? parseInt(res.locals.accountData.account_id)
+        : null;
+    const reviewData = await reviewModel.getReviewsById(inv_id);
+    const customerReviews = await utilities.buildReviews(reviewData);
     res.render("./inventory/listing", {
         title: itemName,
         nav,
         listing,
+        customerReviews,
+        inv_id,
+        account_id,
+        errors: null,
     });
 };
 

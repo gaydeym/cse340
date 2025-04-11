@@ -84,48 +84,52 @@ Util.buildClassificationGrid = async function (data) {
 /* **************************************
  * Build a single listing element view HTML
  * ************************************ */
-Util.buildItemListing = async function (data) {
+Util.buildItemListing = async (data) => {
     let listing = "";
-    console.dir({ data });
-    if (data) {
+
+    if (data && typeof data === "object") {
+        const inv_image = data.inv_image || "";
+        const inv_make = data.inv_make || "";
+        const inv_model = data.inv_model || "";
+        const inv_price = data.inv_price || 0;
+        const inv_description = data.inv_description || "";
+        const inv_color = data.inv_color || "";
+        const inv_miles = data.inv_miles || 0;
+
         listing = `
-      <section class="car-listing">
-        <img src="${data.inv_image}" alt="${data.inv_make} ${data.inv_model}">
-        <div class="car-information">
-          <div>
-            <h2>${data.inv_make} ${data.inv_model} Details</h2>
+        <section class="car-listing">
+          <img src="${inv_image}" alt="${inv_make} ${inv_model}">
+          <div class="car-information">
+            <div>
+              <h2>${inv_make} ${inv_model} Details</h2>
+            </div>
+            <div class="description">
+              <p class="price bold">
+                Price: ${Number.parseFloat(inv_price).toLocaleString("en-US", {
+                    style: "currency",
+                    currency: "USD",
+                    minimumFractionDigits: 0,
+                })}
+              </p>
+              <p>
+                <span class="bold">Description: </span>${inv_description}
+              </p>
+              <p>
+                <span class="bold">Color: </span>${inv_color}
+              </p>
+              <p>
+                <span class="bold">Miles: </span>${Number(
+                    inv_miles
+                ).toLocaleString("en-US", { style: "decimal" })}
+              </p>
+            </div>
           </div>
-          <div class="description">
-            <p class="price bold">
-              Price: ${Number.parseFloat(data.inv_price).toLocaleString(
-                  "en-US",
-                  {
-                      style: "currency",
-                      currency: "USD",
-                      minimumFractionDigits: 0,
-                  }
-              )}
-            </p>
-            <p>
-              <span class="bold">Description: </span>${data.inv_description}
-            </p>
-            <p>
-              <span class="bold">Color: </span>${data.inv_color}
-            </p>
-            <p>
-              <span class="bold">Miles: </span>${data.inv_miles.toLocaleString(
-                  "en-US",
-                  { style: "decimal" }
-              )}
-            </p>
-          </div>
-        </div>
-      </section>
-    `;
+        </section>
+      `;
     } else {
         listing = `
-      <p>Sorry, not matching vehicles could be found.</p>
-    `;
+        <p>Sorry, no matching vehicles could be found.</p>
+      `;
     }
     return listing;
 };
@@ -136,15 +140,20 @@ Util.buildItemListing = async function (data) {
 Util.buildClassificationDropdown = async function (classification_id = "") {
     let data = await invModel.getClassifications();
 
-    let option = `<select id="classification_id" name="classification_id" required><option value="" disabled ${!classification_id ? "selected" : ""}>Select a classification</option>`;
+    let option = `<select id="classification_id" name="classification_id" required><option value="" disabled ${
+        !classification_id ? "selected" : ""
+    }>Select a classification</option>`;
     data.rows.forEach((row) => {
-        const isSelected = classification_id.toString() === row.classification_id.toString()? "selected": "";
+        const isSelected =
+            classification_id.toString() === row.classification_id.toString()
+                ? "selected"
+                : "";
         option += `<option value="${row.classification_id}" ${isSelected}>${row.classification_name}</option>`;
     });
 
     option += `</select>`;
     return option;
-};          
+};
 
 /* ****************************************
  * Middleware For Handling Errors
@@ -182,12 +191,12 @@ Util.checkJWTToken = (req, res, next) => {
  *  Check Login
  * ************************************ */
 Util.checkLogin = (req, res, next) => {
-  if (res.locals.loggedin) {
-      next();
-  } else {
-      req.flash("notice", "Please log in.");
-      return res.redirect("/account/login");
-  }
+    if (res.locals.loggedin) {
+        next();
+    } else {
+        req.flash("notice", "Please log in.");
+        return res.redirect("/account/login");
+    }
 };
 
 /* ****************************************
@@ -248,6 +257,85 @@ Util.checkAccountType = (req, res, next) => {
                 "Your session has expired or is invalid. Please log in again."
             );
         });
+};
+
+/* ****************************************
+ * Build view for reviews
+ **************************************** */
+Util.buildReviews = async function (data) {
+    const options = {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    };
+
+    if (!data || data.length === 0) {
+        return "<p>Be the first to write a review for this vehicle.</p>";
+    }
+
+    // Sort the data, most recent first
+    data.sort((a, b) => new Date(b.review_date) - new Date(a.review_date));
+
+    const reviewList = data
+        .map((row) => {
+            const firstInitial =
+                row.account_firstname?.charAt(0).toUpperCase() || "";
+            const lastName = row.account_lastname || "";
+            const screenName = `${firstInitial}${lastName}`;
+            const reviewDate = new Date(row.review_date).toLocaleDateString(
+                "en-US",
+                options
+            );
+            const reviewText = row.review_text || "No review text provided.";
+
+            return `
+        <li>
+            <div class="review-display">
+                <p><strong>${screenName}</strong> wrote on ${reviewDate}</p>
+                <hr/>
+                <p>${reviewText}</p>
+            </div>
+        </li>`;
+        })
+        .join("");
+
+    return `<ul class="review-list">${reviewList}</ul>`;
+};
+
+/* ****************************************
+ * Build view for my reviews
+ **************************************** */
+Util.buildMyReviews = async function (data) {
+    const options = { year: "numeric", month: "long", day: "numeric" };
+
+    if (!data || data.length === 0) {
+        return "<p>You have no reviews.</p>";
+    }
+
+    data.sort((a, b) => new Date(b.review_date) - new Date(a.review_date));
+
+    const reviewList = data
+        .map((row) => {
+            const reviewDate = new Date(row.review_date).toLocaleDateString(
+                "en-US",
+                options
+            );
+
+            return `
+        <li>
+            <div">
+                <p>Reviewed the <strong>${row.inv_year} ${row.inv_make} ${row.inv_model}</strong> on ${reviewDate}</p>
+                <div">
+                <a href='/inv/detail/${row.inv_id}' title='Click to view'>View</a>
+                    <a href='/review/edit-review/${row.review_id}' title='Click to update'>Edit</a>
+                    <a href='/review/delete-review/${row.review_id}' title='Click to delete'>Delete</a>
+                </div>
+            </div>
+        </li>`;
+        })
+        .join("");
+
+    return `<ol type="1">${reviewList}</ol>`;
 };
 
 module.exports = Util;
