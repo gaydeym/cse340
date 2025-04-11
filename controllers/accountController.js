@@ -203,7 +203,6 @@ accountController.updateAccountInfo = async function (req, res) {
         })
         return
     }
-    next()
 }
 
 /* ****************************************
